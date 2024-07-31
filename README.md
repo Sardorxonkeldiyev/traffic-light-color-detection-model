@@ -136,6 +136,8 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+```
+
 Conclusion
 This project demonstrates the application of deep learning in computer vision, specifically for detecting traffic light colors in real-time. The model is trained using a simple dataset but performs well enough for basic applications. For further improvements, consider expanding the dataset or experimenting with more complex architectures.
 
