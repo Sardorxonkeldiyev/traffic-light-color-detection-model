@@ -1,10 +1,10 @@
 
 ![stop-light-pictures-u2lumacpdkv9srsr](https://github.com/user-attachments/assets/61d6a6b0-0689-4599-ab8d-bdee72db6fe6)
 
-Traffic Light Color Detection Model
+# Traffic Light Color Detection Model
 This project contains a deep learning model designed to detect the color of traffic lights (Red, Green, Yellow) in real-time using a webcam. The model is trained on a dataset consisting of images categorized by traffic light colors. The repository includes the dataset, the trained model, and a Jupyter notebook demonstrating how to train and use the model.
 
-Project Structure
+### Project Structure
 dataset/: Contains the images used to train the model. It has three subfolders:
 
 red/: Images of red traffic lights.
@@ -25,15 +25,15 @@ bash
 pip install tensorflow opencv-python numpy
 ```
 
-Training the Model
+### Training the Model
 The model was trained using the dataset provided in the dataset folder. The dataset is split into training and validation sets, and data augmentation techniques are applied to improve the model's robustness.
 
-Model Architecture
+### Model Architecture
 The model is built using TensorFlow and Keras with the following architecture:
 
-Convolutional Layers: Extract features from the images.
-MaxPooling Layers: Downsample the feature maps.
-Flatten Layer: Flatten the 2D feature maps into 1D.
+* Convolutional Layers: Extract features from the images.
+* MaxPooling Layers: Downsample the feature maps.
+* Flatten Layer: Flatten the 2D feature maps into 1D.
 Dense Layers: Fully connected layers for classification.
 Dropout Layer: Prevents overfitting.
 Output Layer: Uses softmax activation to classify images into one of the three categories: Red, Green, Yellow.
