@@ -1,3 +1,6 @@
+
+![stop-light-pictures-u2lumacpdkv9srsr](https://github.com/user-attachments/assets/61d6a6b0-0689-4599-ab8d-bdee72db6fe6)
+
 Traffic Light Color Detection Model
 This project contains a deep learning model designed to detect the color of traffic lights (Red, Green, Yellow) in real-time using a webcam. The model is trained on a dataset consisting of images categorized by traffic light colors. The repository includes the dataset, the trained model, and a Jupyter notebook demonstrating how to train and use the model.
 
