@@ -146,4 +146,4 @@ cv2.destroyAllWindows()
 ### Conclusion
 This project demonstrates the application of deep learning in computer vision, specifically for detecting traffic light colors in real-time. The model is trained using a simple dataset but performs well enough for basic applications. For further improvements, consider expanding the dataset or experimenting with more complex architectures.
 
-# This model may not work accurately because we have small data, if we have large and accurate data, the Model will start working accurately
+### This model may not work accurately because we have small data, if we have large and accurate data, the Model will start working accurately
