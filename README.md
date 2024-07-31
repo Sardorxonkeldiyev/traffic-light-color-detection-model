@@ -99,8 +99,10 @@ model.fit(train_generator, validation_data=validation_generator, epochs=20)
 model.save('traffic_light_model.h5')
 ```
 
-Using the Model for Real-Time Detection
+
+* Using the Model for Real-Time Detection
 You can use the trained model to detect traffic light colors in real-time using your webcam. The script below shows how to implement this:
+
 
 
 ```python
@@ -141,8 +143,8 @@ cap.release()
 cv2.destroyAllWindows()
 ```
 
-Conclusion
+### Conclusion
 This project demonstrates the application of deep learning in computer vision, specifically for detecting traffic light colors in real-time. The model is trained using a simple dataset but performs well enough for basic applications. For further improvements, consider expanding the dataset or experimenting with more complex architectures.
 
-Acknowledgments
+* Acknowledgments
 Thank you for checking out this project. Feel free to contribute by improving the model, adding new features, or providing feedback.
