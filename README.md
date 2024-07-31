@@ -20,6 +20,7 @@ bash
 
 ```python
 pip install tensorflow opencv-python numpy
+```
 
 Training the Model
 The model was trained using the dataset provided in the dataset folder. The dataset is split into training and validation sets, and data augmentation techniques are applied to improve the model's robustness.
@@ -93,6 +94,8 @@ model.fit(train_generator, validation_data=validation_generator, epochs=20)
 
 # Save the model
 model.save('traffic_light_model.h5')
+```
+
 Using the Model for Real-Time Detection
 You can use the trained model to detect traffic light colors in real-time using your webcam. The script below shows how to implement this:
 
