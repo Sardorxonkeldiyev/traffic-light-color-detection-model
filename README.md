@@ -1,149 +1,41 @@
 
 ![resized_image](https://github.com/user-attachments/assets/0dbecf02-cc1c-454d-a376-0faec530fe88)
 
-# Traffic Light Color Detection Model
-This project contains a deep learning model designed to detect the color of traffic lights (Red, Green, Yellow) in real-time using a webcam. The model is trained on a dataset consisting of images categorized by traffic light colors. The repository includes the dataset, the trained model, and a Jupyter notebook demonstrating how to train and use the model.
+# 🚦 Traffic Light Color Detection (Computer Vision)
 
-### Project Structure
-dataset/: Contains the images used to train the model. It has three subfolders:
+## 📝 Project Overview
+This repository contains a **Deep Learning** and **Computer Vision** project designed to detect and classify traffic light colors (**Red, Green, Yellow**). Built using TensorFlow and Keras, the project features a custom Convolutional Neural Network (CNN) and a live detection script that utilizes the computer's webcam to classify traffic lights in real-time.
 
-red/: Images of red traffic lights.
-green/: Images of green traffic lights.
-yellow/: Images of yellow traffic lights.
-traffic_light_model.h5: The pre-trained model file that can be used to detect traffic light colors.
+## 🛠️ Tools & Technologies
+* **Deep Learning Framework:** TensorFlow, Keras
+* **Computer Vision:** OpenCV (`cv2`)
+* **Data Manipulation:** NumPy
+* **Data Visualization:** Matplotlib, Seaborn
+* **Model Evaluation:** Scikit-Learn (Confusion Matrix, Classification Report)
 
-appp.ipynb: A Jupyter notebook that includes the full training process, model architecture, and code to test the model in real-time using a webcam.
+## 🚀 Key Features & Workflow
 
-README.md: This file, which provides an overview of the project and instructions for use.
+### 1. Image Data Preprocessing & Augmentation
+Used `ImageDataGenerator` to normalize pixel values and artificially expand the training dataset. Applied random transformations (rotation, shifting, zooming, and flipping) to make the model more robust and prevent overfitting.
 
-Requirements
-Before running the code, make sure you have the following dependencies installed:
+### 2. CNN Architecture
+Built a custom Sequential Convolutional Neural Network consisting of:
+* **3 Convolutional Blocks:** `Conv2D` + `MaxPooling2D` with ReLU activation to extract spatial features from images.
+* **Fully Connected Layers:** `Flatten` layer followed by `Dense` layers.
+* **Regularization:** `Dropout (0.5)` layer included to mitigate overfitting.
+* **Output Layer:** `Softmax` activation predicting 3 specific classes (Red, Green, Yellow).
 
-bash
+### 3. Model Evaluation
+* Visualized Training vs. Validation **Accuracy and Loss** curves to monitor the learning process.
+* Generated a **Confusion Matrix** (via Seaborn heatmap) and **Classification Report** to thoroughly analyze precision, recall, and f1-scores for each specific color class.
 
-```python
-pip install tensorflow opencv-python numpy
-```
+### 4. Real-Time Detection (Live Webcam)
+Loaded the trained `traffic_light_model_advanced.h5` model into a live testing environment. Using OpenCV, the script captures webcam frames, preprocesses them on the fly (resizing to 128x128 and normalizing), and overlays the real-time prediction text directly onto the video stream.
 
-### Training the Model
-The model was trained using the dataset provided in the dataset folder. The dataset is split into training and validation sets, and data augmentation techniques are applied to improve the model's robustness.
+## 📂 Project Structure
+* `dataset/`: Directory containing the training and validation images (must be organized into 'Red', 'Green', and 'Yellow' subfolders).
+* `traffic_light_model_advanced.h5`: The saved trained deep learning model.
+* `main_script.py` / `notebook.ipynb`: Contains the model training, evaluation, and live webcam detection code.
 
-### Model Architecture
-The model is built using TensorFlow and Keras with the following architecture:
-
-* Convolutional Layers: Extract features from the images.
-* MaxPooling Layers: Downsample the feature maps.
-* Flatten Layer: Flatten the 2D feature maps into 1D.
-Dense Layers: Fully connected layers for classification.
-Dropout Layer: Prevents overfitting.
-Output Layer: Uses softmax activation to classify images into one of the three categories: Red, Green, Yellow.
-Training Code
-Here’s a snippet from the Jupyter notebook (appp.ipynb) that shows how the model was trained:
-
-
-```python
-import tensorflow as tf
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout 
-
-# Data preparation
-data_gen = ImageDataGenerator(
-    rescale=1./255, 
-    validation_split=0.2,
-    rotation_range=20,
-    width_shift_range=0.2,
-    height_shift_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True,
-    fill_mode='nearest'
-)
-
-train_generator = data_gen.flow_from_directory(
-    'dataset',
-    target_size=(128, 128),
-    batch_size=32,
-    class_mode='categorical',
-    subset='training'
-)
-
-validation_generator = data_gen.flow_from_directory(
-    'dataset',
-    target_size=(128, 128),
-    batch_size=32,
-    class_mode='categorical',
-    subset='validation'
-)
-
-# Model creation
-model = Sequential([
-    Conv2D(32, (3, 3), activation='relu', input_shape=(128, 128, 3)),
-    MaxPooling2D((2, 2)),
-    Conv2D(64, (3, 3), activation='relu'),
-    MaxPooling2D((2, 2)),
-    Conv2D(128, (3, 3), activation='relu'),
-    MaxPooling2D((2, 2)),
-    Flatten(),
-    Dense(256, activation='relu'),
-    Dropout(0.5),
-    Dense(128, activation='relu'),
-    Dense(3, activation='softmax')
-])
-
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-
-# Model training
-model.fit(train_generator, validation_data=validation_generator, epochs=20)
-
-# Save the model
-model.save('traffic_light_model.h5')
-```
-
-
-* Using the Model for Real-Time Detection
-You can use the trained model to detect traffic light colors in real-time using your webcam. The script below shows how to implement this:
-
-
-
-```python
-import cv2
-import numpy as np
-from tensorflow.keras.models import load_model
-
-# Load the trained model
-model = load_model('traffic_light_model.h5')
-
-# Preprocess the image
-def preprocess_image(img):
-    img = cv2.resize(img, (128, 128))
-    img = img.astype('float32') / 255.0
-    img = np.expand_dims(img, axis=0)
-    return img
-
-# Start the webcam
-cap = cv2.VideoCapture(0)
-
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        break
-
-    preprocessed_img = preprocess_image(frame)
-    prediction = model.predict(preprocessed_img)
-    class_idx = np.argmax(prediction)
-    color = ["Red", "Green", "Yellow"][class_idx]
-
-    cv2.putText(frame, f'Traffic Light Color: {color}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-    cv2.imshow('Traffic Light Detection', frame)
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
-```
-
-### Conclusion
-This project demonstrates the application of deep learning in computer vision, specifically for detecting traffic light colors in real-time. The model is trained using a simple dataset but performs well enough for basic applications. For further improvements, consider expanding the dataset or experimenting with more complex architectures.
-
-### This model may not work accurately because we have small data, if we have large and accurate data, the Model will start working accurately
+---
+*Created by [Ismingiz] - Aspiring Data Professional (Computer Vision & Data Science)*
