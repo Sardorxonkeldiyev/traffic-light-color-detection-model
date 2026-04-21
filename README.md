@@ -38,4 +38,4 @@ Loaded the trained `traffic_light_model_advanced.h5` model into a live testing e
 * `main_script.py` / `notebook.ipynb`: Contains the model training, evaluation, and live webcam detection code.
 
 ---
-*Created by [Ismingiz] - Aspiring Data Professional (Computer Vision & Data Science)*
+*Created by Sardor - Aspiring Data Professional (Computer Vision & Data Science)*
